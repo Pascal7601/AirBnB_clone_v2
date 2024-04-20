@@ -15,8 +15,7 @@ class BaseModel:
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
-        for key, value in kwargs.items():
-            setattr(self, key, value)
+
         if not kwargs:
             from models import storage
             self.id = str(uuid.uuid4())
@@ -30,6 +29,8 @@ class BaseModel:
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
+        for key, value in kwargs.items():
+            setattr(self, key, value)
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
