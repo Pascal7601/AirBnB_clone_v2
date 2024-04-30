@@ -55,8 +55,10 @@ class FileStorage:
         except json.decoder.JSONDecodeError:
         # Handle the case where the file is empty or not valid JSON
             print("Error: JSON file is empty or not valid")
-
+    
+    """a function that deletes a class """
     def delete(self, obj=None):
+        """deletes a class"""
         if obj is not None:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             if key in self.__objects:
