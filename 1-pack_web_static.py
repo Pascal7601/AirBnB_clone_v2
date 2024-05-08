@@ -18,5 +18,7 @@ def do_pack():
 
         local("tar -czvf {}{}.tgz web_static".format(file_name, time_str))
 
+        return "{}{}".format(file_name, time_str)
+
     except Exception:
         return None
