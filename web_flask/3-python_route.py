@@ -47,7 +47,7 @@ def py_route(text):
         new_text = 'is cool'
     else:
         new_text = ' '.join(text.split('_'))
-    return f"Python {new_text}"
+    return f"Python {escape(new_text)}"
 
 
 if __name__ == '__main__':
