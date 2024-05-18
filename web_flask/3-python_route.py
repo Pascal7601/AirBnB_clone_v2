@@ -44,7 +44,7 @@ def py_route(text):
     section keyed by the user
     """
     if text is None:
-       new_text = 'is cool'
+        new_text = 'is cool'
     else:
         new_text = ' '.join(text.split('_'))
     return f"Python {new_text}"
