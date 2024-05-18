@@ -37,7 +37,7 @@ def c_route(text):
     return f"C {escape(new_text)}"
 
 
-@app.route('/python/<text>')
+@app.route('/python/<text>', strict_slashes=False)
 def py_route(text):
     """
     displays content in the python
