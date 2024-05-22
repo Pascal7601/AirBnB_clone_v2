@@ -40,6 +40,8 @@ class BaseModel:
             if 'created_at' in kwargs:
                 kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                         '%Y-%m-%dT%H:%M:%S.%f')
+            else:
+                kwargs['created_at'] = datetime.now()
             kwargs.pop('__class__', None)
             self.__dict__.update(kwargs)
 
