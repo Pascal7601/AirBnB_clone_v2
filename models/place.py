@@ -7,6 +7,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy import Table
 from sqlalchemy.orm import relationship
 from models.amenity import Amenity
+from models.review import Review
 import os
 
 
@@ -33,21 +34,20 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
-
     amenity_ids = []
 
-    if os.getenv('HBNB_STORAGE_TYPE') == 'db':
-        reviews = relationship('Review', backref='place',
+    reviews = relationship('Review', backref='place',
                                cascade='all, delete-orphan', passive_deletes=True)
-        amenities = relationship('Amenity', secondary=association_table,
+    amenities = relationship('Amenity', secondary=association_table,
                                  back_populates='place_amenities', viewonly=False)
-    else:
+
+    if os.getenv('HBNB_STORAGE_TYPE') != 'db':
         # File-based storage properties and methods
         @property
         def reviews(self):
             """Getter attribute that returns the list of Review instances"""
             from models import storage
-            return [review for review in storage.all('Review').values() if review.place_id == self.id]
+            return [review for review in storage.all(Review).values() if review.place_id == self.id]
 
         @property
         def amenities(self):
