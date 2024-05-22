@@ -36,18 +36,17 @@ class DBStorage:
         """
         function to
         """
-        obj_dict = {}
+        obj_list = []
         if cls:
             if isinstance(cls, str):
                 try:
                     cls = globals()[cls]
                 except KeyError:
-                    print("class {cls} not found")
-                    return obj_dict
+                    pass
             if issubclass(cls, Base):
                 obj_list = self.__session.query(cls).all()
         else:
-            obj_list = []
+            obj_dict = {}
             for subclass in Base.__subclasses__():
                 obj_list.extend(self.__session.query(subclass).all())
         for obj in obj_list:
