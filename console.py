@@ -227,13 +227,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             objects = storage.all(args)
-            for obj_id, obj in objects.items():
-                print_list.append(str(obj))
+            print_list = [str(obj) for obj in objects.values()]
         else:
             objects = storage.all()
-            for obj_id, obj in objects.items():
-                print_list.append(str(obj))
-
+            print_list = [str(obj) for obj in objects.values()]
         print(print_list)
 
     def help_all(self):
