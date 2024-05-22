@@ -10,7 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-
+import shlex
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -218,20 +218,22 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: destroy <className> <objectId>\n")
 
     def do_all(self, args):
-        """ Shows all objects, or all objects of a class"""
-        print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            objects = storage.all(args)
-            print_list = [str(obj) for obj in objects.values()]
+        """ 
+        Shows all objects, or all objects of a class
+        """
+        objects = storage.all()
+        command = shlex.split(args)
+        if len(command) == 0:
+            # If no class name is provided, print all instances
+            for key, value in objects.items():
+                print(str(value))
+        elif command[0] not in self.classes:
+            print("** class doesn't exist **")
         else:
-            objects = storage.all()
-            print_list = [str(obj) for obj in objects.values()]
-        print(print_list)
+            # If class name is provided, print instances of that class
+            for key, value in objects.items():
+                if key.split(".")[0] == command[0]:
+                    print(str(value))
 
     def help_all(self):
         """ Help information for the all command """
