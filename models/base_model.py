@@ -12,14 +12,18 @@ from sqlalchemy import Column, Integer, String, DateTime
 Base = declarative_base()
 
 class BaseModel:
-    """all hbnb models"""
+    """
+    all hbnb models
+    """
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     """class for all hbnb models"""
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model"""
+        """
+        Instatntiates a new model
+        """
 
         if not kwargs:
             self.id = str(uuid.uuid4())
@@ -36,11 +40,13 @@ class BaseModel:
             if 'created_at' in kwargs:
                 kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                         '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            kwargs.pop('__class__', None)
             self.__dict__.update(kwargs)
 
     def __str__(self):
-        """Returns a string representation of the instance"""
+        """
+        Returns a string representation of the instance
+        """
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
@@ -55,7 +61,9 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """Convert instance into dict format"""
+        """
+        Convert instance into dict format
+        """
         dictionary = {}
         dictionary.update(self.__dict__)
         if '_sa_instance_state' in dictionary:
