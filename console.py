@@ -225,14 +225,15 @@ class HBNBCommand(cmd.Cmd):
         command = shlex.split(args)
         if len(command) == 0:
             # If no class name is provided, print all instances
-            for key, value in objects.items():
-                print(str(value))
-        elif command[0] not in self.classes:
+            for obj in objects.values():
+                print(str(obj))
+        elif command[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             # If class name is provided, print instances of that class
+            class_name = command[0]
             for key, value in objects.items():
-                if key.split(".")[0] == command[0]:
+                if key.split(".")[0] == class_name:
                     print(str(value))
 
     def help_all(self):
