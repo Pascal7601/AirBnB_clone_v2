@@ -37,6 +37,7 @@ class DBStorage:
         function to
         """
         obj_list = []
+        obj_dict = {}
         if cls:
             if isinstance(cls, str):
                 try:
@@ -46,7 +47,6 @@ class DBStorage:
             if issubclass(cls, Base):
                 obj_list = self.__session.query(cls).all()
         else:
-            obj_dict = {}
             for subclass in Base.__subclasses__():
                 obj_list.extend(self.__session.query(subclass).all())
         for obj in obj_list:
