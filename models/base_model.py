@@ -33,6 +33,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     setattr(self, key, value)
+            if 'id' not in kwargs:
+                self.id = str(uuid.uuid4())
             if 'updated_at' in kwargs:
                 kwargs['updated_at'] = datetime.strptime(
                                                         kwargs['updated_at'],
@@ -69,7 +71,7 @@ class BaseModel:
         dictionary = {}
         dictionary.update(self.__dict__)
         if '_sa_instance_state' in dictionary:
-            del dictionary['_sa_instance_state']
+            dictionary.pop('_sa_instance_state')
         dictionary['__class__'] = self.__class__.__name__
         
         #dictionary.update({'__class__':
