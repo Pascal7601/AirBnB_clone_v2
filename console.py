@@ -135,7 +135,10 @@ class HBNBCommand(cmd.Cmd):
                 if "_" in value:
                     kwargs[key] = value.strip('"').replace("_", " ")
                 elif "." in value:
-                    kwargs[key] = float(value)
+                    try:
+                        kwargs[key] = float(value)
+                    except ValueError:
+                        kwargs[key] = value
                 else:
                     kwargs[key] = eval(value)
 
